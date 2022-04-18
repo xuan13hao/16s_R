@@ -1891,7 +1891,7 @@ PlotAlphaData<-function(mbSetObj, data.src, bargraphName, distName, metadata, ta
   
   bargraphName = paste(bargraphName, ".", format, sep="");
   mbSetObj$imgSet$alpha <- bargraphName;  
-  Cairo::Cairo(file=bargraphName, width, height=450, type=format, bg="white", dpi=dpi);
+  Cairo::Cairo(file=bargraphName, width+100, height=450, type=format, bg="white", dpi=dpi);
   box = plot_richness(data, color = metadata, measures = distName) + scale_x_discrete(limits=c(smplord));
   
   if(colors == "viridis"){
@@ -1902,7 +1902,7 @@ PlotAlphaData<-function(mbSetObj, data.src, bargraphName, distName, metadata, ta
   
   mbSetObj$analSet$alpha <- box$data;
   fast.write(mbSetObj$analSet$alpha, file="alphadiversity.csv");
-  box = box + theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1,vjust= 1));
+  box = box + theme_bw(base_size = 18) + theme(axis.text.x = element_text(angle = 45, hjust = 1,vjust= 1));
   box$layers <- box$layers[-1];
   box <- box + geom_point(size=3, alpha=0.7);
   #getting scale for plot (using same for boxplot also)
@@ -2177,16 +2177,16 @@ PlotAlphaBoxData<-function(mbSetObj, boxplotName, distName, metadata, colors="de
     stat_summary(fun.y=mean, #add mean point
                  geom = "point",
                  shape = 18,
-                 size = 4,
+                 size = 5,
                  color = "black") +
     theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 11),
-          axis.text.y = element_text(size = 11),
-          legend.text = element_text(size = 11)) + #adjust titles
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 15),
+          axis.text.y = element_text(size = 15),
+          legend.text = element_text(size = 15)) + #adjust titles
     labs(title = "",
          y= paste("Alpha-diversity Index:", as.character(data$variable[[1]]), sep = " "),
          x="") + #remove x = CLASS, add title name, change y name
-    theme(axis.title.y = element_text(size=14)) + 
+    theme(axis.title.y = element_text(size=15)) + 
     coord_cartesian(ylim = c(ylimits[1], ylimits[2]));
   
   if(colors == "viridis"){
@@ -2368,15 +2368,15 @@ PlotBetaDiversity<-function(mbSetObj, plotNm, ordmeth, distName, colopt, metadat
   box$layers <- box$layers[-1];
   
   if(showlabel=="samnm"){
-    box = box + geom_text(aes(label=sample_id), hjust=0.5, vjust=2, size=3, fontface="bold");
-    box = box + geom_point(size=4, alpha=0.6) + theme_bw();
+    box = box + geom_text(aes(label=sample_id), hjust=0.5, vjust=2, size=4, fontface="bold");
+    box = box + geom_point(size=5, alpha=0.6) + theme_bw(base_size = 20);
   }else if(showlabel=="none"){
-    box=box+geom_point(size=4, alpha=0.8) + theme_bw();
+    box=box+geom_point(size=3, alpha=0.8) + theme_bw(base_size = 20);
   }else{
     showlabel <<- showlabel;
     bx_data <<- data.frame(box$data);
     box = box + geom_text(aes(label=bx_data[ ,showlabel]), hjust=0.5, vjust=2, size=3, fontface="bold");
-    box = box + geom_point(size=4, alpha=0.6) + theme_bw();
+    box = box + geom_point(size=4, alpha=0.6) + theme_bw(base_size = 20);
   }
   
   #used for area color for ellipse
